@@ -4965,6 +4965,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 301060462710371102, guid: 76337d9c6c7c2e7438f0e2ba152337ad, type: 3}
+      propertyPath: gameManagerScore
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 827155140847812069, guid: 76337d9c6c7c2e7438f0e2ba152337ad, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

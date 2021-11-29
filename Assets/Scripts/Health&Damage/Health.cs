@@ -129,6 +129,7 @@ public class Health : MonoBehaviour
             c.enabled = true;
         }
         currentHealth = defaultHealth;
+        GameManager.ResetScore();
     }
 
     /// <summary>

@@ -49,7 +49,8 @@ public class GameManager : MonoBehaviour
     [Header("Scores")]
 
     [Tooltip("The player's score")]
-    [SerializeField] private int gameManagerScore = 0;
+    [SerializeField] private int gameManagerScore = 20;
+    public bool scoreIsRunning = false;
 
     // Static getter/setter for player score (for convenience)
     public static int score
@@ -86,6 +87,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
+        scoreIsRunning = true;
         if (instance == null)
         {
             instance = this;
@@ -129,9 +131,50 @@ public class GameManager : MonoBehaviour
     /// Retuns:
     /// void
     /// </summary>
+    bool countdown = false;
+    [Tooltip("Oxygen Level")]
+    public static int oxygen = 20;
     private void Update()
     {
         UpdateUIElements();
+        if (scoreIsRunning)
+        {
+            if (score > 0)
+            {
+                StartCoroutine(Countdown());
+            }
+            else
+            {
+                Debug.Log("Oxygen has run out!");
+                score = 0;
+                scoreIsRunning = false;
+            }
+        }
+        else
+        {
+            if (score > 0)
+            {
+                scoreIsRunning = true;
+            }
+            else
+            {
+                playerHealth.TakeDamage(1);
+            }
+        }
+    }
+
+    private IEnumerator Countdown()
+    {
+        while (!countdown)
+        {
+            countdown = true;
+            yield return new WaitForSeconds(1); //wait 2 seconds
+            if (score > 0)
+            {
+                score -= 1;
+            }
+            countdown = false;
+        }
     }
 
 
@@ -277,8 +320,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static void ResetScore()
     {
-        PlayerPrefs.SetInt("score", 0);
-        score = 0;
+        PlayerPrefs.SetInt("score", oxygen);
+        score = oxygen;
     }
 
     /// <summary>
