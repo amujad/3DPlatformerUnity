@@ -9,7 +9,7 @@ public class ScorePickup : Pickup
 {
     [Header("Score Pickup Settings")]
     [Tooltip("The amount of score gained when picked up.")]
-    public int scoreAmount = 1;
+    public int scoreAmount = 20;
 
     /// <summary>
     /// Description:
