@@ -11,6 +11,7 @@ public class Pickup : MonoBehaviour
     [Header("Settings")]
     [Tooltip("The effect to create when this pickup is collected")]
     public GameObject pickUpEffect;
+    public float respawnTime = 5f;
 
     /// <summary>
     /// Description:
@@ -41,7 +42,26 @@ public class Pickup : MonoBehaviour
             {
                 Instantiate(pickUpEffect, transform.position, Quaternion.identity, null);
             }
-            Destroy(this.gameObject);
+            if (this.gameObject.tag == "Respawn")
+            {
+                StartCoroutine(waiter(respawnTime, this.gameObject));
+            }
+            else
+            {
+                Destroy(this.gameObject);
+            }
         }
+    }
+
+    IEnumerator waiter(float seconds, GameObject respawn)
+    {
+        if (respawn.activeInHierarchy)
+        {
+            respawn.transform.GetChild(0).gameObject.GetComponent<Renderer>().enabled = false;
+            respawn.GetComponent<Collider>().enabled = false;
+        }
+        yield return new WaitForSeconds(seconds);
+        respawn.transform.GetChild(0).gameObject.GetComponent<Renderer>().enabled = true;
+        respawn.GetComponent<Collider>().enabled = true;
     }
 }
